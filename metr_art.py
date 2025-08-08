@@ -127,3 +127,35 @@ class MetroArt:
                 continuar = input("¿Desea continuar con más obras? (s/n): ")
                 if continuar.lower() != "s":
                     break
+
+
+    def crear_obra_desde_api(self, id_obra):
+        """
+        Solicita los datos de una obra por ID y devuelve un objeto ObraExtendida.
+        """
+        url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id_obra}"
+        respuesta = requests.get(url)
+        try:
+            datos = respuesta.json()
+        except:
+            return None
+
+        nombre = datos["artistDisplayName"]
+        nacionalidad = datos["artistNationality"]
+        nacimiento = datos["artistBeginDate"]
+        fallecimiento = datos["artistEndDate"]
+        titulo = datos["title"]
+        tipo = datos["classification"]
+        fecha = datos["objectDate"]
+        imagen = datos["primaryImage"] 
+
+        artista = Artista(nombre, nacionalidad, nacimiento, fallecimiento)
+
+        return ObraExtendida(
+            id_obra=id_obra,
+            titulo= titulo,
+            artista=artista,
+            tipo=tipo,
+            fecha_creacion=fecha,
+            imagen_url=imagen
+        )
