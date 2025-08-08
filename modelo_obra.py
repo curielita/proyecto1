@@ -1,10 +1,7 @@
 from artista import Artista
 
+#Representa una obra del museo, asociada a un artista.
 class ObraExtendida:
-    """
-    Representa una obra del museo, asociada a un artista.
-    """
-
     def __init__(self, id_obra, titulo, artista: Artista, tipo, fecha_creacion, imagen_url):
         if id_obra != "":
             self.id_obra = id_obra
