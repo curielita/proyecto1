@@ -27,3 +27,20 @@ class MetroArt:
                 break
             else:
                 print("Opción inválida. Intente nuevamente.")
+
+    def buscar_y_mostrar_obras(self, url):
+        """
+        Realiza una búsqueda en la API y muestra las obras de 5 en 5.
+        """
+        respuesta = requests.get(url)
+        try:
+            datos = respuesta.json()
+        except:
+            print("No se pudo procesar la respuesta.")
+            return
+
+        if "objectIDs" not in datos or not datos["objectIDs"]:
+            print("No se encontraron obras.")
+            return
+
+        self.mostrar_obras_por_bloque(datos["objectIDs"])
