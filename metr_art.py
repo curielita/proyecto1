@@ -88,3 +88,42 @@ class MetroArt:
         termino = nacionalidades[index].nombre
         url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={termino}"
         self.buscar_y_mostrar_obras(url)
+
+    def mostrar_obras_por_bloque(self, lista_ids):
+        """
+        Muestra obras en bloques de 5. Permite ver detalles por ID del grupo actual.
+        """
+        index = 0
+        total = len(lista_ids)
+
+        while index < total:
+            print(f"\n--- Mostrando obras {index + 1} a {min(index + 5, total)} de {total} ---\n")
+            grupo_actual = []
+
+            for id_obra in lista_ids[index:index + 5]:
+                obra = self.crear_obra_desde_api(id_obra)
+                if obra:
+                    grupo_actual.append(obra)
+                    obra.mostrar_resumen()
+
+            while True:
+                opcion = input("\n¿Desea ver detalles de alguna obra? (ID / no): ")
+                if opcion.lower() == "no":
+                    break
+
+                obra_encontrada = None
+                for o in grupo_actual:
+                    if str(o.id_obra) == opcion:
+                        obra_encontrada = o
+                        break
+
+                if obra_encontrada:
+                    obra_encontrada.mostrar_detalle()
+                else:
+                    print("ID no encontrado en este grupo.")
+
+            index += 5
+            if index < total:
+                continuar = input("¿Desea continuar con más obras? (s/n): ")
+                if continuar.lower() != "s":
+                    break
