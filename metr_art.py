@@ -2,11 +2,8 @@ class MetroArt:
     """
     Sistema principal de interacción con el usuario para consultar obras del museo.
     """
-
+#Muestra el menú principal y gestiona las opciones.
     def iniciar(self):
-        """
-        Muestra el menú principal y gestiona las opciones.
-        """
         while True:
             print("\n===== Sistema MetroArt =====")
             print("1. Consultar obras por Departamento")
