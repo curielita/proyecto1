@@ -57,3 +57,34 @@ class MetroArt:
 
         url_obras = f"https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds={depto_id}"
         self.buscar_y_mostrar_obras(url_obras)
+
+    # Permite buscar obras por nacionalidad del autor usando el archivo CSV.
+    def buscar_por_nacionalidad(self):
+        nacionalidades = []
+        try:
+            with open("CH_Nationality_List_20171130_v1.csv", encoding="utf-8") as archivo:
+                lector = csv.reader(archivo)
+                for fila in lector:
+                    if fila and fila[0].strip() != "":
+                        nacionalidad = Nacionalidad(fila[0].strip())
+                        nacionalidades.append(nacionalidad)
+        except:
+            print("No se pudo leer el archivo de nacionalidades.")
+            return
+
+        for i, nac in enumerate(nacionalidades):
+            print(f"{i + 1}. {nac}")
+
+        seleccion = input("Ingrese el número de la nacionalidad: ")
+        if not seleccion.isdigit():
+            print("Valor inválido.")
+            return
+
+        index = int(seleccion) - 1
+        if index < 0 or index >= len(nacionalidades):
+            print("Número fuera de rango.")
+            return
+
+        termino = nacionalidades[index].nombre
+        url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={termino}"
+        self.buscar_y_mostrar_obras(url)
