@@ -129,10 +129,8 @@ class MetroArt:
                     break
 
 
+       #Solicita los datos de una obra por ID y devuelve un objeto ObraExtendida.
     def crear_obra_desde_api(self, id_obra):
-        """
-        Solicita los datos de una obra por ID y devuelve un objeto ObraExtendida.
-        """
         url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id_obra}"
         respuesta = requests.get(url)
         try:
