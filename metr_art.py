@@ -28,6 +28,17 @@ class MetroArt:
             else:
                 print("Opción inválida. Intente nuevamente.")
 
+    #Permite buscar obras por nombre del autor.
+    def buscar_por_autor(self):
+
+        autor = input("Ingrese el nombre del autor: ").strip()
+        if autor == "":
+            print("Nombre vacío.")
+            return
+
+        url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?q={autor}"
+        self.buscar_y_mostrar_obras(url)
+
     def buscar_y_mostrar_obras(self, url):
         """
         Realiza una búsqueda en la API y muestra las obras de 5 en 5.
